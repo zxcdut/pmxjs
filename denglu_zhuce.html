@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>悦读项目</title>
+		<link rel="stylesheet" href="css/denglu_zhuce.css" />
+		<script type="text/javascript" src="js/time.js" ></script>
+		<script type="text/javascript" src="js/denglu_zhuce.js"></script>
+		<script type="text/javascript" src="js/md5.js" ></script>
+		<script type="text/javascript">
+			//MD5加密
+            var sig=hex_md5(accountSid+AuthToken+timestamp);
+            //定义ajax请求
+            function ajax(type,url,cb,abc){
+               var xhr=new XMLHttpRequest();
+               dataType="jsonp";
+               xhr.onreadystatechange=function(){
+                    if(xhr.status==200&&xhr.readyState==4){
+                    var data = JSON.parse(xhr.responseText); // 将JSON字符串转化为JSON对象
+                    cb(data);
+                    } 
+               } 
+               xhr.open(type,url,true);
+               xhr.withCredentials=true;
+               xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+               xhr.send(abc);
+               }
+            //定义需要发送给服务器的数据
+            var abc="accountSid="+accountSid+"&smsContent="+smsContent+"&to=15108440878"+"&timestamp="+timestamp+"&sig"+sig+"&respDataType=JSON";
+            console.log(abc);
+            //向服务器发送请求
+            ajax("POST",url,function(data){
+            	console.log(data)
+            },abc)
+            //定义请求验证码的函数
+            
+		</script>
+	</head>
+	<body>
+		<div class="bg-photo">
+            <!--头部-->
+			<div class="head">	
+			</div>
+			<img src="img/apis.png"/>
+			<a class="head-a">悦读项目</a>
+			<!--登录-->
+			<!--<div class="login">
+				<a>登录</a>
+				<a>注册</a>
+				<input class="phone" type="text" value="请输入手机号" />
+				<input class="password" type="text" value="请输入密码" />
+			</div>-->
+			<!--注册-->
+			<div class="bg-register">
+			</div>
+			<div id="register" class="register">
+				<a class="register-login" onclick="DisplayLogin()" >登录</a>
+				<a class="register-register">注册</a>
+				<input id="phone" class="phone" type="text" placeholder="请输入手机号码" value="" />
+				<input id="duanxin" class="duanxin" type="text" placeholder="请输入短信验证码" value=""/>
+				<button class="button-yzm"onclick="get_yzm()" >获取验证码</button>
+				<input id="first-password" class="first-password" type="password" placeholder="请输入6~32位密码" value=""/>
+				<input id="second-password" class="second-password" type="password" placeholder="重复密码" value=""/>
+				<button id="button-register" class="button-register" onclick="ToRegister()" >注      册</button>
+				<p onclick="DisplayLoginv()"><a>已有账户，马上登录</a></p>
+			</div>
+			<div id="login" class="login">
+				<a id="login-login" class="login-login">登录</a>
+				<a id="login-register" class="login-register" onclick="DisplayRegister()" >注册</a>
+				<input id="login-phone" class="login-phone" type="text" placeholder="请输入手机号码" value="" />
+				<input id="login-password" class="login-password" type="password" placeholder="请输入密码" value=""/>
+				<button class="login-button" onclick="ToLogin()" >登   &nbsp   录</button>
+				<button class="forget-password" onclick="ForgetPassword()" >忘记密码？</button>
+			</div>
+			<p class="beian">Copyright © 2017 apis.sh All Rights Reserved | 陕ICP备15013925号-3</p>
+		</div>
+		
+	</body>
+</html>
